@@ -1,6 +1,6 @@
-import Main from '../components/main'
+import Main from '@/components/main'
 
-export const ErrorLogger = {
+export default {
   path: '/error_logger',
   name: 'error_logger',
   meta: {
@@ -16,7 +16,7 @@ export const ErrorLogger = {
         icon: 'ios-bug',
         title: '错误收集'
       },
-      component: () => import('../view/single-page/error-logger.vue')
+      component: () => import('@/view/single-page/error-logger.vue')
     }
   ]
 }

@@ -21,7 +21,7 @@ export default {
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
-    messageReadList: [],
+    messageReadedList: [],
     messageTrashList: [],
     messageContentStore: {}
   },
@@ -51,8 +51,8 @@ export default {
     setMessageUnreadList (state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadList (state, list) {
-      state.messageReadList = list
+    setMessageReadedList (state, list) {
+      state.messageReadedList = list
     },
     setMessageTrashList (state, list) {
       state.messageTrashList = list
@@ -69,7 +69,7 @@ export default {
   },
   getters: {
     messageUnreadCount: state => state.messageUnreadList.length,
-    messageReadList: state => state.messageReadList.length,
+    messageReadedCount: state => state.messageReadedList.length,
     messageTrashCount: state => state.messageTrashList.length
   },
   actions: {
@@ -138,7 +138,7 @@ export default {
         getMessage().then(res => {
           const { unread, readed, trash } = res.data
           commit('setMessageUnreadList', unread.sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
-          commit('messageReadList', readed.map(_ => {
+          commit('setMessageReadedList', readed.map(_ => {
             _.loading = false
             return _
           }).sort((a, b) => new Date(b.create_time) - new Date(a.create_time)))
@@ -173,7 +173,7 @@ export default {
         hasRead(msg_id).then(() => {
           commit('moveMsg', {
             from: 'messageUnreadList',
-            to: 'messageReadList',
+            to: 'messageReadedList',
             msg_id
           })
           commit('setMessageCount', state.unreadCount - 1)
@@ -188,7 +188,7 @@ export default {
       return new Promise((resolve, reject) => {
         removeReaded(msg_id).then(() => {
           commit('moveMsg', {
-            from: 'messageReadList',
+            from: 'messageReadedList',
             to: 'messageTrashList',
             msg_id
           })
@@ -204,7 +204,7 @@ export default {
         restoreTrash(msg_id).then(() => {
           commit('moveMsg', {
             from: 'messageTrashList',
-            to: 'messageReadList',
+            to: 'messageReadedList',
             msg_id
           })
           resolve()

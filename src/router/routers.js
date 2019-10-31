@@ -1,7 +1,5 @@
-import { MessageRouter } from './message'
-import { MainRouter } from './main'
-import { ErrorStore } from './error_store'
-import { ErrorLogger } from './error_logger'
+import Main from '@/components/main'
+import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -19,19 +17,197 @@ import { ErrorLogger } from './error_logger'
  * }
  */
 
+import Message from './message'
+import SystemSetting from './system-setting'
+
+export const Components = {
+  path: '/components',
+  name: 'components',
+  meta: {
+    icon: 'logo-buffer',
+    title: '组件'
+  },
+  component: Main,
+  children: [
+    {
+      path: 'tree_select_page',
+      name: 'tree_select_page',
+      meta: {
+        icon: 'md-arrow-dropdown-circle',
+        title: '树状下拉选择器'
+      },
+      component: () => import('@/view/components/tree-select/index.vue')
+    },
+    {
+      path: 'count_to_page',
+      name: 'count_to_page',
+      meta: {
+        icon: 'md-trending-up',
+        title: '数字渐变'
+      },
+      component: () => import('@/view/components/count-to/count-to.vue')
+    },
+    {
+      path: 'drag_list_page',
+      name: 'drag_list_page',
+      meta: {
+        icon: 'ios-infinite',
+        title: '拖拽列表'
+      },
+      component: () => import('@/view/components/drag-list/drag-list.vue')
+    },
+    {
+      path: 'drag_drawer_page',
+      name: 'drag_drawer_page',
+      meta: {
+        icon: 'md-list',
+        title: '可拖拽抽屉'
+      },
+      component: () => import('@/view/components/drag-drawer')
+    },
+    {
+      path: 'org_tree_page',
+      name: 'org_tree_page',
+      meta: {
+        icon: 'ios-people',
+        title: '组织结构树'
+      },
+      component: () => import('@/view/components/org-tree')
+    },
+    {
+      path: 'tree_table_page',
+      name: 'tree_table_page',
+      meta: {
+        icon: 'md-git-branch',
+        title: '树状表格'
+      },
+      component: () => import('@/view/components/tree-table/index.vue')
+    },
+    {
+      path: 'cropper_page',
+      name: 'cropper_page',
+      meta: {
+        icon: 'md-crop',
+        title: '图片裁剪'
+      },
+      component: () => import('@/view/components/cropper/cropper.vue')
+    },
+    {
+      path: 'tables_page',
+      name: 'tables_page',
+      meta: {
+        icon: 'md-grid',
+        title: '多功能表格'
+      },
+      component: () => import('@/view/components/tables/tables.vue')
+    },
+    {
+      path: 'split_pane_page',
+      name: 'split_pane_page',
+      meta: {
+        icon: 'md-pause',
+        title: '分割窗口'
+      },
+      component: () => import('@/view/components/split-pane/split-pane.vue')
+    },
+    {
+      path: 'markdown_page',
+      name: 'markdown_page',
+      meta: {
+        icon: 'logo-markdown',
+        title: 'Markdown编辑器'
+      },
+      component: () => import('@/view/components/markdown/markdown.vue')
+    },
+    {
+      path: 'editor_page',
+      name: 'editor_page',
+      meta: {
+        icon: 'ios-create',
+        title: '富文本编辑器'
+      },
+      component: () => import('@/view/components/editor/editor.vue')
+    },
+    {
+      path: 'icons_page',
+      name: 'icons_page',
+      meta: {
+        icon: '_bear',
+        title: '自定义图标'
+      },
+      component: () => import('@/view/components/icons/icons.vue')
+    }
+  ]
+}
+export const Login = {
+  path: '/login',
+  name: 'login',
+  meta: {
+    title: 'Login - 登录',
+    hideInMenu: true
+  },
+  component: () => import('@/view/login/login.vue')
+}
+export const Home = {
+  path: '/',
+  name: '_home',
+  redirect: '/home',
+  component: Main,
+  meta: {
+    hideInMenu: true,
+    notCache: true
+  },
+  children: [
+    {
+      path: '/home',
+      name: 'home',
+      meta: {
+        hideInMenu: true,
+        title: '首页',
+        notCache: true,
+        icon: 'md-home'
+      },
+      component: () => import('@/view/single-page/home')
+    }
+  ]
+}
+
 export default [
-  MainRouter,
-  MessageRouter,
-  ErrorStore,
-  ErrorLogger,
+  Components,
+  Message,
+  Login,
+  Home,
+  SystemSetting,
   {
-    path: '/login',
-    name: 'login',
+    path: '/argu',
+    name: 'argu',
     meta: {
-      title: '后台登录',
       hideInMenu: true
     },
-    component: () => import('../view/login/login.vue')
+    component: Main,
+    children: [
+      {
+        path: 'params/:id',
+        name: 'params',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ params }}-${route.params.id}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () => import('@/view/argu-page/params.vue')
+      },
+      {
+        path: 'query',
+        name: 'query',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ query }}-${route.query.id}`,
+          notCache: true
+        },
+        component: () => import('@/view/argu-page/query.vue')
+      }
+    ]
   },
   {
     path: '/401',
@@ -39,7 +215,7 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('../view/error-page/401.vue')
+    component: () => import('@/view/error-page/401.vue')
   },
   {
     path: '/500',
@@ -47,7 +223,7 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('../view/error-page/500.vue')
+    component: () => import('@/view/error-page/500.vue')
   },
   {
     path: '*',
@@ -55,6 +231,6 @@ export default [
     meta: {
       hideInMenu: true
     },
-    component: () => import('../view/error-page/404.vue')
+    component: () => import('@/view/error-page/404.vue')
   }
 ]

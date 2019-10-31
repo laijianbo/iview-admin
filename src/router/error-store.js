@@ -1,6 +1,6 @@
-import Main from '../components/main'
+import Main from '@/components/main'
 
-export const ErrorStore = {
+export default {
   path: '/error_store',
   name: 'error_store',
   meta: {
@@ -15,7 +15,7 @@ export const ErrorStore = {
         icon: 'ios-bug',
         title: '错误收集'
       },
-      component: () => import('../view/error-store/error-store.vue')
+      component: () => import('@/view/error-store/error-store.vue')
     }
   ]
 }

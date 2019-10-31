@@ -7,7 +7,7 @@
             <span class="category-title">未读消息</span><Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
           </MenuItem>
           <MenuItem name="readed">
-            <span class="category-title">已读消息</span><Badge style="margin-left: 10px" class-name="gray-dadge" :count="messageReadCount"></Badge>
+            <span class="category-title">已读消息</span><Badge style="margin-left: 10px" class-name="gray-dadge" :count="messageReadedCount"></Badge>
           </MenuItem>
           <MenuItem name="trash">
             <span class="category-title">回收站</span><Badge style="margin-left: 10px" class-name="gray-dadge" :count="messageTrashCount"></Badge>
@@ -56,7 +56,7 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 const listDic = {
   unread: 'messageUnreadList',
-  readed: 'messageReadList',
+  readed: 'messageReadedList',
   trash: 'messageTrashList'
 }
 export default {
@@ -73,7 +73,7 @@ export default {
   computed: {
     ...mapState({
       messageUnreadList: state => state.user.messageUnreadList,
-      messageReadList: state => state.user.messageReadList,
+      messageReadedList: state => state.user.messageReadedList,
       messageTrashList: state => state.user.messageTrashList,
       messageList () {
         return this[listDic[this.currentMessageType]]
@@ -86,7 +86,7 @@ export default {
     }),
     ...mapGetters([
       'messageUnreadCount',
-      'messageReadCount',
+      'messageReadedCount',
       'messageTrashCount'
     ])
   },
