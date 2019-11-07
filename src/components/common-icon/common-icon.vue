@@ -3,10 +3,8 @@
 </template>
 
 <script>
-import Icons from '_c/icons'
 export default {
   name: 'CommonIcon',
-  components: { Icons },
   props: {
     type: {
       type: String,
