@@ -1,27 +1,23 @@
 <template>
   <Form ref="formCustom" :model="fromData" :rules="ruleValidate" :label-width="90" :label-colon="true">
-    <FormItem label="登录账号" prop="account">
-      <Input type="text" v-model="fromData.account"></Input>
-    </FormItem>
-    <FormItem label="登录密码" prop="password">
-      <Input type="password" password v-model="fromData.password"></Input>
-    </FormItem>
-    <FormItem label="所属角色" prop="role_id">
-      <Select v-model="fromData.role_id" placeholder="请选择所属角色" @on-change="selectedRole">
-        <Option value="1">系统管理员</Option>
+    <FormItem label="所属节点" prop="pid">
+      <Select v-model="fromData.pid" placeholder="请选择所属节点" @on-change="selectedNode">
+        <Option value="0">根节点</Option>
       </Select>
     </FormItem>
+    <FormItem label="节点名称" prop="title">
+      <Input type="text" v-model="fromData.title"></Input>
+    </FormItem>
+    <FormItem label="节点图标" prop="icon">
+      <Input type="text" v-model="fromData.icon" :style="{width:'80px',}"></Input>
+      <Icon type="md-add"/>
 
-    <FormItem label="联系电话">
-      <Input type="text" v-model="fromData.mobile" number></Input>
     </FormItem>
-    <FormItem label="邮箱地址">
-      <Input type="text" v-model="fromData.email"></Input>
+    <FormItem label="路由地址" prop="url">
+      <Input type="text" v-model="fromData.url"></Input>
     </FormItem>
-    <FormItem label="备注">
-      <Input v-model="fromData.remark" type="textarea" :autosize="{minRows: 3,maxRows: 5}" show-word-limit
-             maxlength="50"
-             placeholder="请输入50字以内的备注信息..."></Input>
+    <FormItem label="排序" prop="sort">
+      <Input type="number" v-model="fromData.sort"></Input>
     </FormItem>
     <FormItem>
       <Row>
@@ -36,7 +32,7 @@
 
 <script>
   export default {
-    name: 'UserInfo',
+    name: 'NodeDetails',
     props: ['info'],
     data: () => {
       return {
@@ -78,10 +74,10 @@
       handleReset() {
         this.$emit('closeModal')
       },
-      selectedRole(val) {
-        this.fromData.role_id = val
+      selectedNode(val) {
+        this.fromData.pid = val
         // TODO 循环角色列表获取真实角色名称
-        this.fromData.role_name = "管理员角色"
+        this.fromData.p_title = "根节点"
       }
     }
   }

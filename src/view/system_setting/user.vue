@@ -10,7 +10,7 @@
       </Button>
     </div>
     <br>
-    <Table stripe :data="tableData" :columns="columnData" max-height="500"></Table>
+    <Table stripe :data="tableData" :columns="columnData" max-height="500" :loading="tabLoading"></Table>
     <div style="margin: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :total="100" :current="1" show-total show-sizer show-elevator @on-change="pageChange"></Page>
@@ -212,7 +212,7 @@
                       this.info(params.index)
                     }
                   }
-                }, '详情'),
+                }, '编辑'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -229,10 +229,10 @@
           },
         ],
         searchKey: '',
-        modalTitle: '新增系统用户',
         iModal: false,
         title: '新增系统用户',
         loading: true,
+        tabLoading: false,
         userInfo: {...obj},
         currentPage: 1,
         show: false
@@ -241,12 +241,15 @@
     methods: {
       getList() {
         this.$Loading.start()
+        this.tabLoading = true
         setTimeout(() => {
           this.$Loading.finish()
+          this.tabLoading = false
         }, 2000)
       },
       info(index = false) {
         if (index !== false) {
+          this.title = '修改系统用户'
           this.userInfo = this.tableData[index]
           console.log(this.tableData[index])
         } else {

@@ -19,22 +19,13 @@ export default {
       component: () => import('@/view/system_setting/user.vue')
     },
     {
-      path: 'sys_menu',
-      name: '系统菜单',
-      meta: {
-        icon: '',
-        title: '系统菜单'
-      },
-      component: () => import('@/view/system_setting/user.vue')
-    },
-    {
       path: 'auth_node',
       name: '权限节点',
       meta: {
         icon: '',
         title: '权限节点'
       },
-      component: () => import('@/view/system_setting/user.vue')
+      component: () => import('@/view/system_setting/node.vue')
     },
     {
       path: 'auth_rule',
@@ -43,7 +34,17 @@ export default {
         icon: '',
         title: '系统角色'
       },
-      component: () => import('@/view/system_setting/user.vue')
+      component: () => import('@/view/system_setting/role.vue')
+    },
+    {
+      path: 'authorize',
+      name: '角色授权',
+      meta: {
+        icon: '',
+        title: '角色授权',
+        hideInMenu: true
+      },
+      component: () => import('@/view/system_setting/components/authorize.vue')
     },
     {
       path: '/error_logger/error_logger_page',
